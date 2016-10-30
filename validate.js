@@ -83,7 +83,7 @@ var EzForms = (function ($) {
         if ($form.data('never-disabled') !== 'true') {
             $form
                 .ready(setSubmittable)
-                .on('focus change', setSubmittable)
+                .on('focus keyup change', setSubmittable)
         }
         $form
             .on('submit',
