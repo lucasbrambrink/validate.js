@@ -4,13 +4,15 @@
 
 var EzForms = (function ($) {
     var STATES = Utils.STATES;
+    var DATA = Utils.DATA;
 
     var validateInput = function (element, dispatchSuccessOnly) {
         var $element = $(element);
-        if (typeof $element.data('validate') === 'undefined') return;
+        var validateOver = $element.data(DATA.VALIDATE);
+        if (typeof validateOver === 'undefined') return;
 
         var value = $element.val();
-        var keys = $element.data('validate').split(",");
+        var keys = validateOver.split(",");
 
         var validator, key, isValid;
         for (var i = 0; i < keys.length; i++) {
@@ -20,10 +22,10 @@ var EzForms = (function ($) {
 
             switch (key) {
                 case 'mustBeOlderThan':
-                    isValid = validator.fn(value, $element.data('older-than'));
+                    isValid = validator.fn(value, $element.data(DATA.OLDER_THAN));
                     break;
                 case 'matches':
-                    isValid = validator.fn(value, $element.data('match-to'));
+                    isValid = validator.fn(value, $element.data(DATA.MATCH_TO));
                     break;
                 default:
                     isValid = validator.fn(value);

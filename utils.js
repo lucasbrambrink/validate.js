@@ -144,6 +144,12 @@ var Utils = (function($) {
         INVALID: 'invalid',
         DISABLED: 'disabled'
     };
+    var DATA = {
+        VALIDATE: 'validate',
+        ERROR_MESSAGE: 'error-message',
+        OLDER_THAN: 'older-than',
+        MATCH_TO: 'match-to'
+    };
     var ERROR_LABEL = 'label.error';
 
     var stringIsNullOrEmpty = function(value) {
@@ -188,14 +194,11 @@ var Utils = (function($) {
             $label = $('<label class="error"></label>');
             $element.after($label);
         }
-        var message = $element.data('error-message') || msg;
+        var message = $element.data(DATA.ERROR_MESSAGE) || msg;
         $label.text(message);
         $element
             .removeClass(STATES.VALID)
             .addClass(STATES.INVALID);
-            //.on('change keyup', function() {
-            //    setNeutral(selector);
-            //});
     };
 
     var setValid = function(selector) {
@@ -210,6 +213,7 @@ var Utils = (function($) {
 
     return {
         STATES: STATES,
+        DATA: DATA,
         VALIDATORS: VALIDATORS,
         DateUtil: DateUtil,
         stringIsNullOrEmpty: stringIsNullOrEmpty,
