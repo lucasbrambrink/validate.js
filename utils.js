@@ -123,7 +123,7 @@ var VALIDATORS = {
     },
     name: {
         fn: function (value) {
-            var validName = new RegExp("/^[a-zA-Z-\s']+$/");
+            var validName = new RegExp("^[a-zA-Z-' ]+$");
             return validName.test(value);
         },
         message: 'Names may only contain letters, dashes or apostrophes.',
@@ -192,10 +192,10 @@ var Utils = (function($) {
         $label.text(message);
         $element
             .removeClass(STATES.VALID)
-            .addClass(STATES.INVALID)
-            .on('change', function() {
-                setNeutral(selector);
-            });
+            .addClass(STATES.INVALID);
+            //.on('change keyup', function() {
+            //    setNeutral(selector);
+            //});
     };
 
     var setValid = function(selector) {

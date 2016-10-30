@@ -5,7 +5,7 @@
 var EzForms = (function ($) {
     var STATES = Utils.STATES;
 
-    var validateInput = function (element) {
+    var validateInput = function (element, dispatchSuccessOnly) {
         var $element = $(element);
         if (typeof $element.data('validate') === 'undefined') return;
 
@@ -29,10 +29,14 @@ var EzForms = (function ($) {
                     isValid = validator.fn(value);
                     break;
             }
-            isValid ? Utils.setValid(element)
-                    : Utils.setInvalid(element, validator.message);
             if (!isValid) break;
         }
+        if (dispatchSuccessOnly && !isValid) {
+            return;
+        }
+
+        isValid ? Utils.setValid(element)
+                : Utils.setInvalid(element, validator.message);
     };
 
     var formIsValid = function (form) {
@@ -71,6 +75,9 @@ var EzForms = (function ($) {
             .find('[data-validate]')
             .on('blur', function() {
                 validateInput(this);
+            })
+            .on('keyup', function() {
+                validateInput(this, true);
             });
 
         if ($form.data('never-disabled') !== 'true') {
@@ -106,7 +113,9 @@ var EzForms = (function ($) {
 })(jQuery);
 
 (function($) {
-    $.fn.ezForm = function () {
-        return EzForms();
-    }
+    $.fn.extend({
+        ezFormValidation: function () {
+            EzForms.init(this);
+        }
+    });
 })(jQuery);
