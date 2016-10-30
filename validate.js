@@ -149,5 +149,7 @@ var EzForms = (function ($) {
 })(jQuery);
 
 (function($) {
-    $.fn.ezForm = EzForms;
+    $.fn.ezForm = function () {
+        return EzForms;
+    }
 })(jQuery);
