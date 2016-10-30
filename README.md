@@ -4,13 +4,15 @@ alternative to the relatively large client-side validation libraries
 available that require loads of customizations to the way you want. 
 
 Based on intuitive UI: validations fire when appropriate. Validating
-too early (before the user has finished typing) is insulting;
-validating too late (when they are ready to submit) can be a
-jarring 'hidden surprise'. Propagating the change from invalid to valid
+too early (before the user has finished typing) is offensive;
+validating too late (on submit) can annoyingly
+reveal hidden surprises. Propagating the change from invalid to valid
 immediately provides a nicer user experience.
 
+It can be loaded asynchronously without a hitch.
 
-# Implementation
+
+## Implementation
 Simply enumerate validation types in the element's "validate" data attribute.
 They are processed in order. 
 
@@ -32,7 +34,7 @@ simply add the data attribute.
 `data-never-disabled="true"`
 
 
-# Validations
+## Validations
 - required
 - digits
 - phoneNumber
@@ -42,10 +44,10 @@ simply add the data attribute.
 - zipcode
 - date
 - alphanumeric
-- mustBeOlderThan (checks age to be past threshold)
-- matchTo (validates equality to another DOM node)
+- mustBeOlderThan (checks age in `data-older-than` to be past threshold)
+- matchTo (validates equality to `data-match-to` DOM node)
 
-# Extensibility
+## Extensibility
 This plugin was designed to ship with bare necessities while being
 easily extensible. Simply add a new validation rule to the VALIDATORS
 object, and add it to the DOM node's data attribute. That's it!
