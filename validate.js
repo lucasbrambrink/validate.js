@@ -107,6 +107,6 @@ var EzForms = (function ($) {
 
 (function($) {
     $.fn.ezForm = function () {
-        return EzForms;
+        return EzForms();
     }
 })(jQuery);

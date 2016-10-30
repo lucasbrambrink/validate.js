@@ -1,0 +1,10 @@
+input.valid {
+    border: 1px solid #00C851;
+}
+input.invalid {
+    border: 1px solid #CC0000;
+}
+label.error {
+    color: #CC0000;
+    display: block;
+}

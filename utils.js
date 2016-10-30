@@ -159,7 +159,7 @@ var Utils = (function($) {
         if (isDisabled && disabledAttr === undefined) {
             $el.attr(STATES.DISABLED, STATES.DISABLED);
         } else if (!isDisabled && disabledAttr === STATES.DISABLED) {
-            $el.removeAttribute(STATES.DISABLED);
+            $el.removeAttr(STATES.DISABLED);
         }
     };
 
