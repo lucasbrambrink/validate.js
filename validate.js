@@ -4,47 +4,6 @@
 
 var EzForms = (function ($) {
     var STATES = Utils.STATES;
-    var ERROR_LABEL = 'label.error';
-
-    var setValidity = function(selector, isValid) {
-        isValid
-            ? $(selector)
-                .removeClass(STATES.INVALID)
-                .addClass(STATES.VALID)
-            : $(selector)
-                .removeClass(STATES.VALID)
-                .addClass(STATES.INVALID);
-    };
-
-    var setNeutral = function (selector) {
-        selector = selector || this;
-        $(selector)
-            .removeClass(STATES.VALID)
-            .removeClass(STATES.INVALID)
-            .siblings(ERROR_LABEL).remove();
-    };
-
-    var setInvalid = function (selector, msg) {
-        var $element = $(selector);
-        var $label = $element.siblings(ERROR_LABEL);
-        if ($label.length === 0) {
-            $label = $('<label class="error"></label>');
-            $element.after($label);
-        }
-        var message = $element.data('error-message') || msg;
-        $label.text(message);
-        $element
-            .removeClass(STATES.VALID)
-            .addClass(STATES.INVALID)
-            .on('change', function() {
-                setNeutral(selector);
-            });
-    };
-
-    var setValid = function(selector) {
-        setNeutral(selector);
-        $(selector).addClass(STATES.VALID);
-    };
 
     var validateInput = function (element) {
         var $element = $(element);
@@ -70,8 +29,8 @@ var EzForms = (function ($) {
                     isValid = validator.fn(value);
                     break;
             }
-            isValid ? setValid(element)
-                    : setInvalid(element, validator.message);
+            isValid ? Utils.setValid(element)
+                    : Utils.setInvalid(element, validator.message);
             if (!isValid) break;
         }
     };
@@ -83,7 +42,7 @@ var EzForms = (function ($) {
                 validateInput(this);
             });
         var formIsValid = $(form).find('.' + STATES.INVALID).length === 0;
-        setValidity(form, formIsValid);
+        Utils.setState(form, formIsValid);
         return formIsValid;
     };
 
@@ -103,9 +62,7 @@ var EzForms = (function ($) {
 
     var setSubmittable = function() {
         var isValid = formIsComplete(this) && formIsValid(this);
-        setState(this, isValid);
-        var $submit = $(this).find('[type=submit]');
-        Utils.setDisabled($submit, !isValid);
+        Utils.setSubmittable(this, isValid);
     };
 
     var init = function (form) {

@@ -144,6 +144,15 @@ var Utils = (function($) {
         INVALID: 'invalid',
         DISABLED: 'disabled'
     };
+    var ERROR_LABEL = 'label.error';
+
+    var stringIsNullOrEmpty = function(value) {
+        if (typeof value === 'undefined' || value === null) {
+            return false;
+        }
+        return value.trim().length === 0;
+    };
+
     var setDisabled = function(selector, isDisabled) {
         var $el = $(selector);
         var disabledAttr = $el.attr(STATES.DISABLED);
@@ -153,19 +162,63 @@ var Utils = (function($) {
             $el.removeAttribute(STATES.DISABLED);
         }
     };
-    var stringIsNullOrEmpty = function(value) {
-        if (typeof value === 'undefined' || value === null) {
-            return false;
+
+    var setState = function(selector, isValid) {
+        isValid
+            ? $(selector)
+                .removeClass(STATES.INVALID)
+                .addClass(STATES.VALID)
+            : $(selector)
+                .removeClass(STATES.VALID)
+                .addClass(STATES.INVALID);
+    };
+
+    var setNeutral = function (selector) {
+        selector = selector || this;
+        $(selector)
+            .removeClass(STATES.VALID)
+            .removeClass(STATES.INVALID)
+            .siblings(ERROR_LABEL).remove();
+    };
+
+    var setInvalid = function (selector, msg) {
+        var $element = $(selector);
+        var $label = $element.siblings(ERROR_LABEL);
+        if ($label.length === 0) {
+            $label = $('<label class="error"></label>');
+            $element.after($label);
         }
-        return value.trim().length === 0;
+        var message = $element.data('error-message') || msg;
+        $label.text(message);
+        $element
+            .removeClass(STATES.VALID)
+            .addClass(STATES.INVALID)
+            .on('change', function() {
+                setNeutral(selector);
+            });
+    };
+
+    var setValid = function(selector) {
+        setNeutral(selector);
+        $(selector).addClass(STATES.VALID);
+    };
+
+    var setSubmittable = function(form, isValid) {
+        var $submit = $(form).find('[type=submit]');
+        setDisabled($submit, !isValid);
     };
 
     return {
         STATES: STATES,
         VALIDATORS: VALIDATORS,
         DateUtil: DateUtil,
+        stringIsNullOrEmpty: stringIsNullOrEmpty,
         setDisabled: setDisabled,
-        stringIsNullOrEmpty: stringIsNullOrEmpty
+        setState: setState,
+        setValid: setValid,
+        setInvalid: setInvalid,
+        setNeutral: setNeutral,
+        setSubmittable: setSubmittable
     }
 
 })(jQuery);
