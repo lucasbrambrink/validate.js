@@ -148,7 +148,8 @@ var Utils = (function($) {
         VALIDATE: 'validate',
         ERROR_MESSAGE: 'error-message',
         OLDER_THAN: 'older-than',
-        MATCH_TO: 'match-to'
+        MATCH_TO: 'match-to',
+        NEVER_DISABLED: 'never-disabled'
     };
     var ERROR_LABEL = 'label.error';
 

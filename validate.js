@@ -82,7 +82,7 @@ var EzForms = (function ($) {
                 validateInput(this, true);
             });
 
-        if ($form.data('never-disabled') !== 'true') {
+        if ($form.data(DATA.NEVER_DISABLED) !== 'true') {
             $form
                 .ready(setSubmittable)
                 .on('focus keyup change', setSubmittable)
