@@ -120,4 +120,7 @@ var EzForms = (function ($) {
             EzForms.init(this);
         }
     });
+    $(document).ready(function(){
+        $('form').ezFormValidation();
+    });
 })(jQuery);

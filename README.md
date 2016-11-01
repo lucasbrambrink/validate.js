@@ -1,20 +1,13 @@
 # validate.js
-Thin jquery plugin for easy form validation. Inspired to be an
-alternative to the relatively large client-side validation libraries
-available that require loads of customizations to the way you want. 
-
-Based on intuitive UI: validations fire when appropriate. Validating
-too early (before the user has finished typing) is offensive;
-validating too late (on submit) can annoyingly
-reveal hidden surprises. Propagating the change from invalid to valid
-immediately provides a nicer user experience.
-
-It can be loaded asynchronously without a hitch.
+Thin jquery plugin for easy form validation. It is inspired to be small,
+intuitive and extensible. 
 
 
 ## Implementation
 Simply enumerate validation types in the element's "validate" data attribute.
-They are processed in order. 
+They are processed in order. It will toggle `valid`, `invalid` classes,
+so CSS can target with appropriate styles. On error, the error message will
+appear as `<label class="error">Message</label>`.
 
 ```
 <form>
@@ -51,3 +44,10 @@ simply add the data attribute.
 This plugin was designed to ship with bare necessities while being
 easily extensible. Simply add a new validation rule to the VALIDATORS
 object, and add it to the DOM node's data attribute. That's it!
+<script>
+    var key = "new-rule";
+    EzForms.VALIDATORS[key] = function(value) {
+        return value === 'new-rule';
+    };
+</script>
+```
